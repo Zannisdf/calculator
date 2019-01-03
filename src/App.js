@@ -14,9 +14,9 @@ class App extends Component {
 
   numbers = (e) => {
     let evt = e.target.value;
-    this.setState( prevState => ({ output: prevState.output + evt }) );
-
+    this.setState( prevState => ({ output: prevState.output === '0' ? evt : prevState.output + evt }));
   }
+
   render() {
     return (
       <div>
