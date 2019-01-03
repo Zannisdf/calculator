@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Keyboard from './components/keyboard';
+import Display from './components/display';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      output: '0',
+      input: ''
+    }
+  }
+  reset = () => this.setState({ output:'0', input:'' });
+
+  numbers = (e) => {
+    let evt = e.target.value;
+    this.setState( prevState => ({ output: prevState.output + evt }) );
+
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Display
+          output={this.state.output}/>
+        <Keyboard
+          numbers={this.numbers}
+          operators={this.operators}
+          decimal={this.decimal}
+          reset={this.reset}
+          equal={this.equal}
+          back={this.back}/>
       </div>
     );
   }
