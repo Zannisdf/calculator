@@ -7,15 +7,28 @@ class App extends Component {
     super(props);
     this.state = {
       output: '0',
-      input: ''
+      input: '',
+      isSym: false
     }
   }
-  reset = () => this.setState({ output:'0', input:'' });
+  reset = () => this.setState({ output:'0', input:'', isSym: false });
 
   numbers = (e) => {
     let evt = e.target.value;
-    this.setState( prevState => ({ output: prevState.output === '0' ? evt : prevState.output + evt }));
-  }
+    this.setState( prevState => ({ output: prevState.output === '0' ? evt : prevState.output + evt, isSym: false }));
+  };
+
+  operators = (e) => {
+    let evt = e.target.value;
+    console.log(this.state.output.length)
+    if (this.state.output === '0' && evt === '-'){
+      this.setState({ output: evt, isSym: true });
+    } else if (this.state.isSym && this.state.output !== '-'){
+      this.setState( prevState => ({ output: prevState.output.slice(0,-1) + evt, isSym: true }));
+    } else if (!this.state.isSym){
+      this.setState( prevState => ({ output: prevState.output + evt, isSym: true }));
+    };
+  };
 
   render() {
     return (
