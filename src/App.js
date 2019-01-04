@@ -8,26 +8,26 @@ class App extends Component {
     this.state = {
       output: '0',
       input: '',
-      isSym: false
+      isSymAllowed: true
     }
   }
-  reset = () => this.setState({ output:'0', input:'', isSym: false });
+  reset = () => this.setState({ output:'0', input:'', isSymAllowed: true });
 
   numbers = (e) => {
     let evt = e.target.value;
-    this.setState( prevState => ({ output: prevState.output === '0' ? evt : prevState.output + evt, isSym: false }));
+    this.setState( prevState => ({ output: prevState.output === '0' ? evt : prevState.output + evt, isSymAllowed: true }));
   };
 
   operators = (e) => {
     let evt = e.target.value;
     console.log(this.state.output.length)
-    if (this.state.output === '0' && evt === '-'){
-      this.setState({ output: evt, isSym: true });
-    } else if (this.state.isSym && this.state.output !== '-'){
-      this.setState( prevState => ({ output: prevState.output.slice(0,-1) + evt, isSym: true }));
-    } else if (!this.state.isSym){
-      this.setState( prevState => ({ output: prevState.output + evt, isSym: true }));
-    };
+    if (this.state.isSymAllowed){
+      if (this.state.output === '0' && evt === '-'){
+        this.setState( prevState => ({ output: evt, isSymAllowed: false }))
+      } else if (this.state.output !== '-'){
+        this.setState( prevState => ({ output: isNaN(prevState.output.slice(-1)) ? prevState.output.slice(0,-1) + evt : prevState.output + evt }))
+      }
+    }
   };
 
   render() {
