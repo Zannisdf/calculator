@@ -33,7 +33,7 @@ class App extends Component {
       if (prevState.init && evt === '-'){
         return ({ input: evt })
       } else if (!prevState.init){
-        return ({ input: '', init: true, isSymAllowed: true })
+        return ({ input: '', init: true, isSymAllowed: true, operation: [...prevState.operation, prevState.input, evt] })
       };
     });
   };
