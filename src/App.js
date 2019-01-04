@@ -8,38 +8,34 @@ class App extends Component {
     this.state = {
       output: '0',
       input: '',
-      isSymAllowed: true
+      init: true,
+      isSymAllowed: true,
+      operation: []
     }
   }
-  reset = () => this.setState({ output:'0', input:'', isSymAllowed: true });
+  reset = () => this.setState({ output:'0', input:'', isSymAllowed: true, init: true });
 
+  //Zero is not allowed as first input digit
   numbers = (e) => {
     let evt = e.target.value;
     this.setState( prevState => {
-      if (prevState.input === '' && evt === '0'){
-        return ({ input: prevState.input });
-      } else {
+      if (prevState.init && evt !== '0'){
+        return ({ input: prevState.input + evt, init: false });
+      } else if (!prevState.init) {
         return ({ input: prevState.input + evt });
       }
-      // input: prevState.input === '' ? evt === '0' ? prevState.input : prevState.input + evt : prevState.input + evt
     });
   };
 
   operators = (e) => {
     let evt = e.target.value;
-    if (this.state.isSymAllowed){
-      if (this.state.output === '0' && evt === '-'){
-        this.setState( prevState => ({
-          output: evt,
-          isSymAllowed: false
-        }));
-      } else if (this.state.output !== '-'){
-        this.setState( prevState => ({
-          output: isNaN(prevState.output.slice(-1)) ? prevState.output.slice(0,-1) + evt : prevState.output + evt,
-          input: ''
-        }));
+    this.setState( prevState => {
+      if (prevState.init && evt === '-'){
+        return ({ input: evt })
+      } else if (!prevState.init){
+        return ({ input: '', init: true, isSymAllowed: true })
       };
-    };
+    });
   };
 
 
