@@ -8,35 +8,17 @@ class App extends Component {
     this.state = {
       output: '0',
       input: '',
-      init: true,
-      isSymAllowed: true,
-      operation: []
+      isSym: false
     }
   }
-  reset = () => this.setState({ output:'0', input:'', isSymAllowed: true, init: true });
+  reset = () => this.setState({ output:'0', input:'', isSym: false });
 
-  //Zero is not allowed as first input digit
-  numbers = (e) => {
+  numbers = e => {
     let evt = e.target.value;
-    this.setState( prevState => {
-      if (prevState.init && evt !== '0'){
-        return ({ input: prevState.input + evt, init: false });
-      } else if (!prevState.init) {
-        return ({ input: prevState.input + evt });
-      }
-    });
+    this.setState(prevState => ({ input: prevState.input === '0' ? evt : prevState.input + evt }));
   };
 
-  operators = (e) => {
-    let evt = e.target.value;
-    this.setState( prevState => {
-      if (prevState.init && evt === '-'){
-        return ({ input: evt })
-      } else if (!prevState.init){
-        return ({ input: '', init: true, isSymAllowed: true, operation: [...prevState.operation, prevState.input, evt] })
-      };
-    });
-  };
+
 
 
   render() {
