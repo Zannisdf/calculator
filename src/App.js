@@ -8,41 +8,39 @@ class App extends Component {
     this.state = {
       output: '0',
       input: '',
-      isSym: true,
-      firstDec: true
+      operation: []
     }
   }
-  reset = () => this.setState({ output:'0', input:'', isSym: true, firstDec: true });
+  reset = () => this.setState({ output:'0', input:'', operation: [] });
 
   numbers = e => {
+    const operator = /^[+-/*]/
     let evt = e.target.value;
-    this.setState(prevState => ({ input: prevState.input === '0' ? evt : prevState.input + evt }));
+    this.setState(prevState => ({
+      input: operator.test(prevState.input) ? evt : prevState.input + evt
+    }))
   };
 
   operators = e => {
     let evt = e.target.value;
-    this.setState(prevState => {
-      if (evt === '-'){
-        if (prevState.input === '' || /\d-?$/.test(prevState.input)){
-          return ({ input: prevState.input + evt, firstDec: true })
-        }
-      } else {
-        if (/\d$/.test(prevState.input)){
-          return ({ input: prevState.input + evt, firstDec: true })
-        } else if (/\d[-+*/]$/.test(prevState.input)){
-          return ({ input: prevState.input.slice(0,-1) + evt, firstDec: true })
-        }
-      }
-    })
+    this.setState(prevState => ({
+      input: evt,
+      operation: /\d/.test(prevState.input) ? [...prevState.operation, prevState.input, evt] : [...prevState.operation.slice(0,-1), evt]
+    }))
   };
 
   decimal = e => {
+    console.log(this.state.operation)
     let evt = e.target.value
-    this.setState( prevState => {
-      if (/\d$/.test(prevState.input) && prevState.firstDec){
-        return ({ input: prevState.input + evt, firstDec: false })
+    this.setState(prevState => {
+      if (!/\.|[+-/*]/.test(prevState.input)){
+        return ({ input: prevState.input + evt })
       }
     })
+  }
+
+  equal = () => {
+
   }
 
 
