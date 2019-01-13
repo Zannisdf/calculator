@@ -46,11 +46,18 @@ class App extends Component {
 
   equal = () => {
     this.setState(prevState => {
-      let trimmedOperation = /[+-/*]&[^.]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
+      let trimmedOperation = /^[+-/*]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
       handleMultAndDiv(trimmedOperation);
       handleSumAndMinus(trimmedOperation);
       return ({ input: trimmedOperation[0], executed: true, operation: [] })
     })
+  }
+
+  back = () => {
+    console.log(this.state.operation)
+    this.setState( prevState => ({
+      input: prevState.input.length > 1 ? prevState.input.slice(0,-1) : /[+-/*]/.test(prevState.input) ? prevState.input : '0'
+    }));
   }
 
 
