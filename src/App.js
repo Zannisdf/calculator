@@ -9,7 +9,6 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      output: '0',
       input: '0',
       executed: true,
       operation: []
@@ -17,7 +16,7 @@ class App extends Component {
   }
 
 
-  reset = () => this.setState({ output:'0', input:'0', executed: true, operation: [] });
+  reset = () => this.setState({ input:'0', executed: true, operation: [] });
 
   numbers = e => {
     const operator = /^[+-/*]|^0(?!\.)/
@@ -50,7 +49,7 @@ class App extends Component {
       let trimmedOperation = /[+-/*]&[^.]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
       handleMultAndDiv(trimmedOperation);
       handleSumAndMinus(trimmedOperation);
-      return ({ input: trimmedOperation[0], output: trimmedOperation[0], executed: true, operation: [] })
+      return ({ input: trimmedOperation[0], executed: true, operation: [] })
     })
   }
 
@@ -60,7 +59,7 @@ class App extends Component {
       <div className='calculator-container'>
         <Display
           input={this.state.input}
-          output={this.state.output}/>
+          operation={this.state.operation}/>
         <Keyboard
           numbers={this.numbers}
           operators={this.operators}

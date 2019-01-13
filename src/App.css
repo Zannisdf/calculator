@@ -17,6 +17,7 @@ body {
 }
 
 #display {
+  height: 3.25rem;
   color: orange;
   text-align: right;
   cursor: default;
