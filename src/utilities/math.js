@@ -5,7 +5,7 @@ export const handleMultAndDiv = (arr) => {
       let mult = parseFloat(arr[i-1]) * parseFloat(arr[i+1]);
       arr.splice(i-1,3,mult);
       i = 0;
-    } else if (arr[i] === '*'){
+    } else if (arr[i] === '/'){
       let div = parseFloat(arr[i-1]) / parseFloat(arr[i+1]);
       arr.splice(i-1,3,div);
       i = 0;
