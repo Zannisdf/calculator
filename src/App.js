@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Keyboard from './components/keyboard';
 import Display from './components/display';
 import trim from './utilities/trim';
+import './App.css'
 
 class App extends Component {
   constructor(props){
@@ -76,13 +77,10 @@ class App extends Component {
     })
   }
 
-  back = () => console.log(this.state.operation)
-
-
 
   render() {
     return (
-      <div>
+      <div className='calculator-container'>
         <Display
           input={this.state.input}
           output={this.state.output}/>

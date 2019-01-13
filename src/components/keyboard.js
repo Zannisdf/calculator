@@ -4,7 +4,7 @@ class Keyboard extends Component {
   render() {
     const { numbers, operators, decimal, reset, equal, back } = this.props
     return(
-      <div>
+      <div className='button-container'>
         <button onClick={numbers} value="1">1</button>
         <button onClick={numbers} value="2">2</button>
         <button onClick={numbers} value="3">3</button>
@@ -20,9 +20,9 @@ class Keyboard extends Component {
         <button onClick={operators} value="/">/</button>
         <button onClick={operators} value="*">x</button>
         <button onClick={decimal} value=".">.</button>
-        <button onClick={reset}>AC</button>
-        <button onClick={equal}>=</button>
-        <button onClick={back}>back</button>
+        <button onClick={reset} id="clear">AC</button>
+        <button onClick={equal} id="equals">=</button>
+        <button onClick={back} id="back">back</button>
       </div>
     )
   }
