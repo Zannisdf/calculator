@@ -16,7 +16,6 @@ class App extends Component {
     }
   }
 
-
   reset = () => this.setState({ input:'0', executed: true, operation: [], error: false });
 
   numbers = e => {
@@ -60,12 +59,10 @@ class App extends Component {
   };
 
   back = () => {
-    console.log(this.state.operation)
     this.setState( prevState => ({
       input: prevState.input.length > 1 ? prevState.input.slice(0,-1) : /[+-/*]/.test(prevState.input) ? prevState.input : '0'
     }));
   };
-
 
   render() {
     return (
