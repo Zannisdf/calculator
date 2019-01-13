@@ -54,4 +54,5 @@ button:hover {
 #equals {
   grid-row: 4 / span 2;
   grid-column: 4 / -1;
+  z-index: 2;
 }
