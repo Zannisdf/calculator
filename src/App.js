@@ -11,19 +11,21 @@ class App extends Component {
     this.state = {
       input: '0',
       executed: true,
-      operation: []
+      operation: [],
+      error: false
     }
   }
 
 
-  reset = () => this.setState({ input:'0', executed: true, operation: [] });
+  reset = () => this.setState({ input:'0', executed: true, operation: [], error: false });
 
   numbers = e => {
     const operator = /^[+-/*]|^0(?!\.)/
     let evt = e.target.value;
     this.setState(prevState => ({
       input: operator.test(prevState.input) || prevState.executed ? evt : prevState.input + evt,
-      executed: false
+      executed: false,
+      error: false
     }))
   };
 
@@ -42,23 +44,27 @@ class App extends Component {
         return ({ input: prevState.input + evt })
       }
     })
-  }
+  };
 
   equal = () => {
     this.setState(prevState => {
       let trimmedOperation = /^[+-/*]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
       handleMultAndDiv(trimmedOperation);
-      handleSumAndMinus(trimmedOperation);
-      return ({ input: trimmedOperation[0], executed: true, operation: [] })
-    })
-  }
+      if (trimmedOperation[0] === 'ERROR'){
+        return ({ input: '0', executed: true, operation: [], error: true })
+      } else {
+        handleSumAndMinus(trimmedOperation);
+        return ({ input: trimmedOperation[0], executed: true, operation: [] });
+      }
+    });
+  };
 
   back = () => {
     console.log(this.state.operation)
     this.setState( prevState => ({
       input: prevState.input.length > 1 ? prevState.input.slice(0,-1) : /[+-/*]/.test(prevState.input) ? prevState.input : '0'
     }));
-  }
+  };
 
 
   render() {
@@ -66,7 +72,8 @@ class App extends Component {
       <div className='calculator-container'>
         <Display
           input={this.state.input}
-          operation={this.state.operation}/>
+          operation={this.state.operation}
+          error={this.state.error}/>
         <Keyboard
           numbers={this.numbers}
           operators={this.operators}
