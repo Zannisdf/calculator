@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Display = ({ input, output }) => (
+const Display = ({ input, operation }) => (
   <div id='display'>
-    <p>Hola, soy Display y muestro {output}</p>
-    <p>Hola, yo muestro Input {input}</p>
+    <p>{operation.length === 0 ? '0' : operation.join('')}</p>
+    <p>{input}</p>
   </div>
 )
 
