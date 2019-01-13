@@ -9,18 +9,20 @@ class App extends Component {
     this.state = {
       output: '0',
       input: '0',
+      executed: true,
       operation: []
     }
   }
 
 
-  reset = () => this.setState({ output:'0', input:'0', operation: [] });
+  reset = () => this.setState({ output:'0', input:'0', executed: true, operation: [] });
 
   numbers = e => {
     const operator = /^[+-/*]|^0(?!\.)/
     let evt = e.target.value;
     this.setState(prevState => ({
-      input: operator.test(prevState.input) ? evt : prevState.input + evt
+      input: operator.test(prevState.input) || prevState.executed ? evt : prevState.input + evt,
+      executed: false
     }))
   };
 
@@ -33,7 +35,6 @@ class App extends Component {
   };
 
   decimal = e => {
-    console.log(this.state.operation)
     let evt = e.target.value
     this.setState(prevState => {
       if (!/\.|[+-/*]/.test(prevState.input)){
@@ -45,7 +46,6 @@ class App extends Component {
   equal = () => {
     this.setState(prevState => {
       let trimmedOperation = /[+-/*]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
-      console.log(trimmedOperation)
       let i = 0
       while (trimmedOperation.includes('*') || trimmedOperation.includes('/')) {
         if (trimmedOperation[i] === '*'){
@@ -71,9 +71,12 @@ class App extends Component {
         }
         i++;
       }
-      return ({ input: '', output: trimmedOperation[0], operation: [] })
+      console.log(trimmedOperation, trimmedOperation[0])
+      return ({ input: trimmedOperation[0], output: trimmedOperation[0], executed: true, operation: [] })
     })
   }
+
+  back = () => console.log(this.state.operation)
 
 
 
