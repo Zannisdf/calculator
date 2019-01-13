@@ -22,7 +22,7 @@ class Keyboard extends Component {
         <button onClick={equal} id="equals">=</button>
         <button onClick={numbers} value="0">0</button>
         <button onClick={decimal} value=".">.</button>
-        <button onClick={back} id="back"><i class="fas fa-long-arrow-alt-left"></i></button>
+        <button onClick={back} id="back"><i className="fas fa-long-arrow-alt-left"></i></button>
       </div>
     )
   }
