@@ -3,6 +3,7 @@ import Keyboard from './components/keyboard';
 import Display from './components/display';
 import trim from './utilities/trim';
 import './App.css'
+import { handleMultAndDiv, handleSumAndMinus} from './utilities/math'
 
 class App extends Component {
   constructor(props){
@@ -45,34 +46,12 @@ class App extends Component {
   }
 
   equal = () => {
+    console.log(this.state.operation)
     this.setState(prevState => {
-      let trimmedOperation = /[+-/*]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
-      let i = 0
-      while (trimmedOperation.includes('*') || trimmedOperation.includes('/')) {
-        if (trimmedOperation[i] === '*'){
-          let mult = parseFloat(trimmedOperation[i-1]) * parseFloat(trimmedOperation[i+1]);
-          trimmedOperation.splice(i-1,3,mult);
-          i = 0;
-        } else if (trimmedOperation[i] === '*'){
-          let div = parseFloat(trimmedOperation[i-1]) / parseFloat(trimmedOperation[i+1]);
-          trimmedOperation.splice(i-1,3,div);
-          i = 0;
-        }
-        i++;
-      }
-      while (trimmedOperation.length > 1) {
-        if (trimmedOperation[i] === '+'){
-          let sum = parseFloat(trimmedOperation[i-1]) + parseFloat(trimmedOperation[i+1]);
-          trimmedOperation.splice(i-1,3,sum);
-          i = 0;
-        } else if (trimmedOperation[i] === '-'){
-          let minus = parseFloat(trimmedOperation[i-1]) - parseFloat(trimmedOperation[i+1]);
-          trimmedOperation.splice(i-1,3,minus);
-          i = 0;
-        }
-        i++;
-      }
-      console.log(trimmedOperation, trimmedOperation[0])
+      let trimmedOperation = /[+-/*]&[^.]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
+      handleMultAndDiv(trimmedOperation);
+      handleSumAndMinus(trimmedOperation);
+      console.log(trimmedOperation[0])
       return ({ input: trimmedOperation[0], output: trimmedOperation[0], executed: true, operation: [] })
     })
   }
