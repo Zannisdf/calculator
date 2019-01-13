@@ -3,7 +3,7 @@ import Keyboard from './components/keyboard';
 import Display from './components/display';
 import trim from './utilities/trim';
 import './App.css'
-import { handleMultAndDiv, handleSumAndMinus} from './utilities/math'
+import { handleMultAndDiv, handleSumAndMinus } from './utilities/math'
 
 class App extends Component {
   constructor(props){
@@ -46,12 +46,10 @@ class App extends Component {
   }
 
   equal = () => {
-    console.log(this.state.operation)
     this.setState(prevState => {
       let trimmedOperation = /[+-/*]&[^.]/.test(prevState.input) ? prevState.operation.slice(0,-1) : [...prevState.operation, trim(prevState.input)];
       handleMultAndDiv(trimmedOperation);
       handleSumAndMinus(trimmedOperation);
-      console.log(trimmedOperation[0])
       return ({ input: trimmedOperation[0], output: trimmedOperation[0], executed: true, operation: [] })
     })
   }
